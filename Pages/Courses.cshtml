@@ -1,0 +1,35 @@
+﻿@page
+@model CoursesModel
+@{
+    ViewData["Title"] = "Courses";
+}
+
+<div class="container-fluid">
+    <h1>Courses</h1>
+    <p>B.S Computer Science</p>
+    <div class="position-relative border-top border-primary">
+        <table class="table table-responsive">
+            <thead class="table-group-divider">
+                <tr>
+                    <th>Code</th>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Credits</th>
+                    <th>Has Prerequisites</th>
+                </tr>
+            </thead>
+            <tbody class="table-group-divider">
+                @foreach (var course in Model.Courses)
+                {
+                    <tr>
+                        <td>@course.CourseCode</td>
+                        <td>@course.CourseTitle</td>
+                        <td>@course.CourseDescription</td>
+                        <td>@course.Credits</td>
+                        <td>@(course.HasPrerequisites ? "Yes" : "No")</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>  
+</div>

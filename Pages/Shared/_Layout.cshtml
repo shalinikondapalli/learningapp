@@ -1,0 +1,68 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - learningapp</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+
+    <script src="~/lib/jquery/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+</head>
+
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg bg-light shadow-sm">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="/">Lean-Prog</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#headerNav"
+                    aria-controls="headerNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="headerNav">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item"><a class="nav-link" aria-current="page" href="#">About Us</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/Courses">Courses</a></li>
+                    </ul>
+                    <form class="d-flex" role="search">
+                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-outline-success" type="submit">Search</button>
+                    </form>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <environment include="Development">
+        <div class="bg-warning-subtle border border-warning d-flex align-items-center p-2 fs-4 fw-semibold text-danger"
+            role="alert">
+            <div>Development Environment</div>
+        </div>
+    </environment>
+    <environment include="Test">
+        <div class="bg-warning-subtle border border-warning d-flex align-items-center p-2 fs-4 fw-semibold text-danger"
+            role="alert">
+            <div>TEST Environment</div>
+        </div>
+    </environment>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; @DateTime.Today.Year - Lean-Prog INC - <a asp-area="" asp-page="/Privacy">Privacy</a>
+        </div>
+    </footer>
+
+
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+
+</html>

@@ -1,0 +1,5 @@
+{
+	"appService.preDeployTask": "publish-release",
+	"appService.deploySubpath": "bin\\Release\\net8.0\\publish",
+	"appService.defaultWebAppToDeploy": "/subscriptions/455b5cdd-30e0-49e9-9eae-4e5f77c2a36e/resourceGroups/lp-rg/providers/Microsoft.Web/sites/lean-prog/slots/test"
+}
