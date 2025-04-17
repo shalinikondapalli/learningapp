@@ -6,7 +6,6 @@ namespace learningapp.Pages
 {
     public class CoursesModel : PageModel
     {
-        private readonly IWebHostEnvironment _hostingEnvironment;
         private readonly ILogger<CoursesModel> _logger;
         private readonly IConfiguration _configuration;
         public List<CourseModel> Courses { get; set; } = [];
@@ -18,43 +17,35 @@ namespace learningapp.Pages
         {
             _logger = logger;
             _configuration = configuration;
-            _hostingEnvironment = hostingEnvironment;
         }
         public void OnGet()
         {
             try
             {
-                if (_hostingEnvironment.IsDevelopment())
-                {
-                    LoadCourses();
-                }
-                else
-                {
+                var config = _configuration.GetSection("Common:Settings");
+                var connectionString = config.GetValue<string>("dbpassword");
 
-                    var connectionString = _configuration.GetConnectionString("StudentDataHubDbConnection");
-                    using var connection = new SqlConnection(connectionString);
+                using var connection = new SqlConnection(connectionString);
+                {
+                    connection.Open();
+                    var command = new SqlCommand("SELECT * FROM [dbo].[Course]", connection);
+                    using var reader = command.ExecuteReader();
+
+                    while (reader.Read())
                     {
-                        connection.Open();
-                        var command = new SqlCommand("SELECT * FROM [dbo].[Course]", connection);
-                        using var reader = command.ExecuteReader();
-
-                        while (reader.Read())
+                        Courses.Add(new CourseModel
                         {
-                            Courses.Add(new CourseModel
-                            {
-                                ID = int.Parse(reader["ID"].ToString()!),
-                                CourseCategoryID = int.Parse(reader["CourseCategoryID"].ToString()!),
-                                CourseTitle = reader["CourseTitle"].ToString()!,
-                                CourseDescription = reader["CourseDescription"].ToString()!,
-                                CourseCode = reader["CourseCode"].ToString()!,
-                                Credits = int.Parse(reader["Credits"].ToString()!),
-                                HasPrerequisites = reader.GetBoolean(6),
-                                ModifiedDate = reader.GetDateTime(7)
-                            });
-                        }
+                            ID = int.Parse(reader["ID"].ToString()!),
+                            CourseCategoryID = int.Parse(reader["CourseCategoryID"].ToString()!),
+                            CourseTitle = reader["CourseTitle"].ToString()!,
+                            CourseDescription = reader["CourseDescription"].ToString()!,
+                            CourseCode = reader["CourseCode"].ToString()!,
+                            Credits = int.Parse(reader["Credits"].ToString()!),
+                            HasPrerequisites = reader.GetBoolean(6),
+                            ModifiedDate = reader.GetDateTime(7)
+                        });
                     }
                 }
-
             }
             catch (SqlException ex)
             {

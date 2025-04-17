@@ -1,0 +1,38 @@
+﻿@page
+@model learningapp.Pages.ProfileManagement.Faculty.DashboardModel
+@{
+}
+
+<div class="container-fluid p-2 my-4">
+    <div class="text-primary">
+        <h1>@Model.FacultyProfile.FirstName, @Model.FacultyProfile.LastName</h1>
+        <h2>@Model.FacultyProfile.Title</h2>
+        <p class="fw-semibold">@Model.FacultyProfile.Department</p>
+    </div>
+    
+    <div class="position-relative border-top border-primary">
+    <table class="table table-responsive">
+        <thead class="table-group-divider">
+                <tr>
+                    <th>Course Code</th>
+                    <th>Course Title</th>
+                    <th>Course Description</th>
+                    <th>Credits</th>
+                    <th>Has Prerequisites</th>
+                </tr>
+            </thead>
+            <tbody class="table-group-divider">
+                @foreach (var course in Model.FacultyProfile.Courses)
+                {
+                        <tr>
+                            <td>@course.CourseCode</td>
+                            <td>@course.CourseTitle</td>
+                            <td>@course.CourseDescription</td>
+                            <td>@course.Credits</td>
+                            <td>@(course.HasPrerequisites ? "Yes" : "No")</td>
+                        </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
